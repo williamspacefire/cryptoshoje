@@ -1,0 +1,31 @@
+{
+    "name": "compilado.xyz",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/williamspacefire/compilado.xyz.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/williamspacefire/compilado.xyz/issues"
+    },
+    "homepage": "https://github.com/williamspacefire/compilado.xyz#readme",
+    "dependencies": {
+        "@chakra-ui/react": "^1.6.2",
+        "@emotion/react": "^11.4.0",
+        "@emotion/styled": "^11.3.0",
+        "framer-motion": "^4.1.17",
+        "next": "^10.2.3",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2"
+    }
+}
