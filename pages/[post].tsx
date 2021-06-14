@@ -97,7 +97,7 @@ const Post: NextPage<Props> = ({ userAgent }) => {
 }
 
 Post.getInitialProps = async ({ pathname }) => {
-    const mark = fs.readFileSync('../posts/como-criar-um-bot.md', 'utf8')
+    const mark = fs.readFileSync('/posts/como-criar-um-bot.md', 'utf8')
     return { userAgent: mark }
 }
 
