@@ -4,6 +4,7 @@ import { Spacer } from '@chakra-ui/layout'
 import { Flex } from '@chakra-ui/layout'
 import { Box } from '@chakra-ui/layout'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Post() {
     return (
@@ -12,8 +13,7 @@ export default function Post() {
                 maxW='600px'
                 borderWidth='1px'
                 borderRadius='lg'
-                overflow='hidden'
-            >
+                overflow='hidden'>
                 <Image
                     src='/image/12.jpg'
                     width={600}
@@ -29,30 +29,26 @@ export default function Post() {
                             letterSpacing='wide'
                             fontSize='xs'
                             textTransform='uppercase'
-                            ml='2'
-                        >
+                            ml='2'>
                             <Badge
                                 m={2}
                                 borderRadius='full'
                                 px='2'
-                                colorScheme='teal'
-                            >
+                                colorScheme='teal'>
                                 Bot
                             </Badge>
                             <Badge
                                 m={2}
                                 borderRadius='full'
                                 px='2'
-                                colorScheme='teal'
-                            >
+                                colorScheme='teal'>
                                 Discord
                             </Badge>
                             <Badge
                                 m={2}
                                 borderRadius='full'
                                 px='2'
-                                colorScheme='teal'
-                            >
+                                colorScheme='teal'>
                                 NodeJS
                             </Badge>
                         </Box>
@@ -63,8 +59,7 @@ export default function Post() {
                         fontWeight='semibold'
                         as='h4'
                         lineHeight='tight'
-                        isTruncated
-                    >
+                        isTruncated>
                         {`Criando um Bot para o Discord com Node.js – Parte 1`}
                     </Box>
 
@@ -83,9 +78,11 @@ export default function Post() {
                         </Box>
                         <Spacer />
                         <Box>
-                            <Button colorScheme='teal' size='sm'>
-                                Ler mais...
-                            </Button>
+                            <Link href='/como-criar-um-bot' passHref>
+                                <Button colorScheme='teal' size='sm' as='a'>
+                                    Ler mais...
+                                </Button>
+                            </Link>
                         </Box>
                     </Box>
                 </Box>

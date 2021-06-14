@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/layout'
 import { Link } from '@chakra-ui/layout'
 import { Box } from '@chakra-ui/layout'
-import config from '../../config.json'
+import config from '../../config'
 
 export default function Footer() {
     const year = new Date().getFullYear()

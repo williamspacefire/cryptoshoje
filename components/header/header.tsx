@@ -6,29 +6,37 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react'
 import Head from 'next/head'
-import config from '../../config.json'
+import config from '../../config'
 import { SunIcon, MoonIcon } from '@chakra-ui/icons'
-import { AppProps } from 'next/dist/next-server/lib/router/router'
+import Link from 'next/link'
 
-export default function Header(props: { title: string }) {
+export default function Header(props: { title: string; homePage?: boolean }) {
+    const { title, homePage } = props
     const changeThemeIcon = useColorModeValue(<MoonIcon />, <SunIcon />)
     const { toggleColorMode } = useColorMode()
+    const pageTitle = homePage ? title : title + config.site.title
+
     return (
         <>
             <Head>
-                <title>{props.title}</title>
+                <title>{pageTitle}</title>
             </Head>
             <Flex p={4} justify='center' align='center'>
                 <Spacer />
                 <Box p='2'>
-                    <Heading size='md'>{config.site.name}</Heading>
+                    <Link href='/' passHref>
+                        <Heading as='a' size='md'>
+                            {config.site.name}
+                        </Heading>
+                    </Link>
                 </Box>
                 <Spacer />
                 <Box>
                     <IconButton
                         aria-label='Mudar tema'
                         onClick={toggleColorMode}
-                        icon={changeThemeIcon}></IconButton>
+                        icon={changeThemeIcon}
+                    />
                 </Box>
             </Flex>
         </>
