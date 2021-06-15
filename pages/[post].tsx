@@ -14,6 +14,7 @@ import { Image } from '@chakra-ui/react'
 import ReactMarkdown from 'react-markdown'
 import { NextPage } from 'next'
 import gfm from 'remark-gfm'
+import { join } from 'path'
 const highlight = require('rehype-highlight')
 const fs = require('fs')
 
@@ -97,7 +98,8 @@ const Post: NextPage<Props> = ({ userAgent }) => {
 }
 
 Post.getInitialProps = async ({ pathname }) => {
-    const mark = fs.readFileSync('/posts/como-criar-um-bot.md', 'utf8')
+    const postsPath = join(process.cwd(), 'posts')
+    const mark = fs.readFileSync(`${postsPath}/como-criar-um-bot.md`, 'utf8')
     return { userAgent: mark }
 }
 
