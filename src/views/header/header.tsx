@@ -6,7 +6,7 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react'
 import Head from 'next/head'
-import config from '../../config'
+import config from '../../../config'
 import { SunIcon, MoonIcon } from '@chakra-ui/icons'
 import Link from 'next/link'
 

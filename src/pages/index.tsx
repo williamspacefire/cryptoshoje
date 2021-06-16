@@ -1,7 +1,7 @@
-import Header from '../components/header/header'
-import config from '../config'
-import Post from '../components/home/post'
-import Footer from '../components/footer/footer'
+import Header from '../views/header/header'
+import config from '../../config'
+import Post from '../views/home/post'
+import Footer from '../views/footer/footer'
 
 export default function Index() {
     return (
