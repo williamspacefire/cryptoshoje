@@ -1,9 +1,20 @@
 import Header from '../views/header/header'
 import config from '../../config'
-import Post from '../views/home/post'
+import PostPage from '../views/home/post'
 import Footer from '../views/footer/footer'
+import { PostsMarkdownFileImpl } from '../adapters/posts'
+import { GetStaticProps } from 'next'
+import { Post } from '../entities/post_type'
 
-export default function Index() {
+export const getStaticProps: GetStaticProps = async context => {
+    const posts = new PostsMarkdownFileImpl()
+
+    return { props: { posts: posts.getPosts() } }
+}
+
+export default function Index(props: { posts: Post[] }) {
+    const { posts } = props
+
     return (
         <>
             <Header
@@ -13,7 +24,7 @@ export default function Index() {
                 }
                 homePage={true}
             />
-            <Post />
+            <PostPage posts={posts} />
             <Footer />
         </>
     )

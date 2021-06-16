@@ -12,28 +12,18 @@ import {
 } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
 import ReactMarkdown from 'react-markdown'
-import { GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next'
+import { GetStaticProps } from 'next'
 import gfm from 'remark-gfm'
-import { join } from 'path'
-const highlight = require('rehype-highlight')
-const fs = require('fs')
-
-type Post = {
-    content: string
-}
+import { PostsMarkdownFileImpl } from '../adapters/posts'
+import { Post } from '../entities/post_type'
 
 export const getStaticProps: GetStaticProps = async context => {
-    const postsPath = join(process.cwd(), '_posts')
-    const fullPath = join(postsPath, 'como-criar-um-bot.md')
-    const mark = fs.readFileSync(fullPath, 'utf8') as string
-    //console.log(mark)
-    const post = mark
+    const post = new PostsMarkdownFileImpl().getPost('como-criar-um-bot')
     return { props: { post } }
 }
 
-const Posts = (props: { post: string }) => {
+const Posts = (props: { post: Post }) => {
     const { post } = props
-    console.log(post)
     return (
         <>
             <Header title='Olá mundo' />
@@ -45,7 +35,7 @@ const Posts = (props: { post: string }) => {
                             margin='3'
                             fontSize='1.875rem'
                             fontWeight='extrabold'>
-                            Criando um Bot para o Discord com Node.js – Parte 1
+                            {post.title}
                         </Heading>
                         <Image
                             borderRadius='xl'
@@ -96,7 +86,7 @@ const Posts = (props: { post: string }) => {
                                         </>
                                     ),
                                 }}>
-                                {post}
+                                {post.content}
                             </ReactMarkdown>
                         </Box>
                     </VStack>
@@ -107,7 +97,7 @@ const Posts = (props: { post: string }) => {
 }
 
 export async function getStaticPaths() {
-    return { fallback: true, paths: ['/como-criar-um-bot'] }
+    return { fallback: true, paths: [] }
 }
 
 export default Posts
