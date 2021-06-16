@@ -12,19 +12,28 @@ import {
 } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
 import ReactMarkdown from 'react-markdown'
-import { NextPage } from 'next'
+import { GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next'
 import gfm from 'remark-gfm'
 import { join } from 'path'
 const highlight = require('rehype-highlight')
 const fs = require('fs')
 
-interface Props {
-    userAgent: string
+type Post = {
+    content: string
 }
 
-const Post: NextPage<Props> = ({ userAgent }) => {
-    const mark = userAgent
+export const getStaticProps: GetStaticProps = async context => {
+    const postsPath = join(process.cwd(), '_posts')
+    const fullPath = join(postsPath, 'como-criar-um-bot.md')
+    const mark = fs.readFileSync(fullPath, 'utf8') as string
+    //console.log(mark)
+    const post = mark
+    return { props: { post } }
+}
 
+const Posts = (props: { post: string }) => {
+    const { post } = props
+    console.log(post)
     return (
         <>
             <Header title='Olá mundo' />
@@ -87,7 +96,7 @@ const Post: NextPage<Props> = ({ userAgent }) => {
                                         </>
                                     ),
                                 }}>
-                                {mark}
+                                {post}
                             </ReactMarkdown>
                         </Box>
                     </VStack>
@@ -97,10 +106,8 @@ const Post: NextPage<Props> = ({ userAgent }) => {
     )
 }
 
-Post.getInitialProps = async ({ pathname }) => {
-    const postsPath = join(process.cwd(), '_posts')
-    const mark = fs.readFileSync(`${postsPath}/como-criar-um-bot.md`, 'utf8')
-    return { userAgent: mark }
+export async function getStaticPaths() {
+    return { fallback: true, paths: ['/como-criar-um-bot'] }
 }
 
-export default Post
+export default Posts
