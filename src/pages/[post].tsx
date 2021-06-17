@@ -16,9 +16,12 @@ import { GetStaticProps } from 'next'
 import gfm from 'remark-gfm'
 import { PostsMarkdownFileImpl } from '../adapters/posts'
 import { Post } from '../entities/post_type'
+import { File } from '../use_cases/file'
+import Footer from '../views/footer/footer'
 
-export const getStaticProps: GetStaticProps = async context => {
-    const post = new PostsMarkdownFileImpl().getPost('como-criar-um-bot')
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const postId = params?.post as string
+    const post = new PostsMarkdownFileImpl().getPost(postId)
     return { props: { post } }
 }
 
@@ -35,7 +38,7 @@ const Posts = (props: { post: Post }) => {
                             margin='3'
                             fontSize='1.875rem'
                             fontWeight='extrabold'>
-                            {post.title}
+                            {post?.title}
                         </Heading>
                         <Image
                             borderRadius='xl'
@@ -58,7 +61,10 @@ const Posts = (props: { post: Post }) => {
                                     ),
                                     h2: ({ node, children }) => (
                                         <>
-                                            <Heading as='h2' margin='3'>
+                                            <Heading
+                                                variant='h2'
+                                                as='h2'
+                                                margin='3'>
                                                 {children}
                                             </Heading>
                                             <Divider />
@@ -86,18 +92,25 @@ const Posts = (props: { post: Post }) => {
                                         </>
                                     ),
                                 }}>
-                                {post.content}
+                                {post?.content}
                             </ReactMarkdown>
                         </Box>
                     </VStack>
                 </Box>
             </Flex>
+            <Footer />
         </>
     )
 }
 
 export async function getStaticPaths() {
-    return { fallback: true, paths: [] }
+    const file = new File()
+    return {
+        fallback: true,
+        paths: file
+            .getDirectoryFiles(File.postsDirectory)
+            .map(file => '/' + file.replace('.md', '')),
+    }
 }
 
 export default Posts

@@ -3,10 +3,8 @@ import { Badge } from '@chakra-ui/layout'
 import { Spacer } from '@chakra-ui/layout'
 import { Flex } from '@chakra-ui/layout'
 import { Box } from '@chakra-ui/layout'
-import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PostsMarkdownFileImpl } from '../../adapters/posts'
 import { Post } from '../../entities/post_type'
 
 export default function PostPage(props: { posts: Post[] }) {
