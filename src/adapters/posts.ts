@@ -7,10 +7,15 @@ import {
 } from '../use_cases/file'
 
 export class PostsMarkdownFileImpl implements PostsModel {
-    getPost(postid: string): Post {
-        const postFileName = `${postid}.md`
+    private postId: string
+
+    constructor(postId: string) {
+        this.postId = postId
+    }
+
+    getPost(): Post {
         const postFileContent = getFileContent(
-            `${postsDirectory}/${postFileName}`
+            `${postsDirectory}/${this.getPostFileNameFromPostId()}`
         )
         const postDescription =
             'Nessa série de posts vamos aprender a criar um bot para o Discord.'
@@ -18,13 +23,27 @@ export class PostsMarkdownFileImpl implements PostsModel {
         return {
             content: postFileContent,
             title: 'Criando um Bot para o Discord com Node.js – Parte 1 - Testando...',
-            canonical: postid,
+            canonical: this.postId,
             description: postDescription,
         }
     }
+
     getPosts(limit?: number): Post[] {
-        return getDirectoryFiles(postsDirectory).map(post =>
-            this.getPost(post.replace('.md', ''))
-        )
+        return getDirectoryFiles(postsDirectory).map(filename => {
+            const postsInstance = new PostsMarkdownFileImpl(
+                this.getPostIdFromFileName(filename)
+            )
+            return postsInstance.getPost()
+        })
+    }
+
+    getPostFileNameFromPostId(postId?: string): string {
+        return postId ? `${postId}.md` : `${this.postId}.md`
+    }
+
+    getPostIdFromFileName(filename?: string): string {
+        return filename
+            ? filename.replace('.md', '')
+            : this.postId.replace('.md', '')
     }
 }
