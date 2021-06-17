@@ -16,12 +16,12 @@ import { GetStaticProps } from 'next'
 import gfm from 'remark-gfm'
 import { PostsMarkdownFileImpl } from '../adapters/posts'
 import { Post } from '../entities/post_type'
-import { File } from '../use_cases/file'
 import Footer from '../views/footer/footer'
+import { getDirectoryFiles, postsDirectory } from '../use_cases/file'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const postId = params?.post as string
-    const post = new PostsMarkdownFileImpl().getPost(postId)
+    const post = new PostsMarkdownFileImpl(postId).getPost()
     return { props: { post } }
 }
 
@@ -104,12 +104,11 @@ const Posts = (props: { post: Post }) => {
 }
 
 export async function getStaticPaths() {
-    const file = new File()
     return {
         fallback: true,
-        paths: file
-            .getDirectoryFiles(File.postsDirectory)
-            .map(file => '/' + file.replace('.md', '')),
+        paths: getDirectoryFiles(postsDirectory).map(
+            file => '/' + file.replace('.md', '')
+        ),
     }
 }
 
