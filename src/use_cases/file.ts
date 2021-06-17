@@ -1,15 +1,11 @@
 import { join } from 'path'
-const fs = require('fs')
+import fs from 'fs'
 
-export class File {
-    static readonly postsDirectory: string = join(process.cwd(), '_posts')
-    private encoding: string = 'utf8'
+export const postsDirectory: string = join(process.cwd(), '_posts')
+const encoding = 'utf8'
 
-    getFileContent(absoluteFilePath: string): string {
-        return fs.readFileSync(absoluteFilePath, this.encoding)
-    }
+export const getFileContent = (absoluteFilePath: string): string =>
+    fs.readFileSync(absoluteFilePath, encoding)
 
-    getDirectoryFiles(directoryPath: string): string[] {
-        return fs.readdirSync(directoryPath) as string[]
-    }
-}
+export const getDirectoryFiles = (directoryPath: string): string[] =>
+    fs.readdirSync(directoryPath)
