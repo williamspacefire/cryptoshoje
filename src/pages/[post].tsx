@@ -67,7 +67,6 @@ const Posts = (props: { post: Post }) => {
                                                 margin='3'>
                                                 {children}
                                             </Heading>
-                                            <Divider />
                                         </>
                                     ),
                                     p: ({ node, children }) => (
