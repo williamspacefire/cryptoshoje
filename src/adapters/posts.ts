@@ -7,13 +7,16 @@ import {
 } from '../use_cases/file'
 
 export class PostsMarkdownFileImpl implements PostsModel {
-    private postId: string
+    private postId?: string
 
-    constructor(postId: string) {
+    setPostId(postId: string): void {
         this.postId = postId
     }
 
     getPost(): Post {
+        if (!this.postId)
+            throw new Error('You need to set postId to use this function')
+
         const postFileContent = getFileContent(
             `${postsDirectory}/${this.getPostFileNameFromPostId()}`
         )
@@ -30,9 +33,8 @@ export class PostsMarkdownFileImpl implements PostsModel {
 
     getPosts(limit?: number): Post[] {
         return getDirectoryFiles(postsDirectory).map(filename => {
-            const postsInstance = new PostsMarkdownFileImpl(
-                this.getPostIdFromFileName(filename)
-            )
+            const postsInstance = new PostsMarkdownFileImpl()
+            postsInstance.setPostId(this.getPostIdFromFileName(filename))
             return postsInstance.getPost()
         })
     }
@@ -42,8 +44,10 @@ export class PostsMarkdownFileImpl implements PostsModel {
     }
 
     getPostIdFromFileName(filename?: string): string {
-        return filename
-            ? filename.replace('.md', '')
-            : this.postId.replace('.md', '')
+        if (filename) {
+            return filename.replace('.md', '')
+        } else if (this.postId) {
+            return this.postId.replace('.md', '')
+        } else throw new Error('You need to pass filename or set the postId')
     }
 }

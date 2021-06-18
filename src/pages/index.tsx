@@ -7,7 +7,7 @@ import { GetStaticProps } from 'next'
 import { Post } from '../entities/post_type'
 
 export const getStaticProps: GetStaticProps = async context => {
-    const posts = new PostsMarkdownFileImpl('')
+    const posts = new PostsMarkdownFileImpl()
 
     return { props: { posts: posts.getPosts() } }
 }

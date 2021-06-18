@@ -20,6 +20,9 @@ export default function Header(props: { title: string; homePage?: boolean }) {
         <>
             <Head>
                 <title>{pageTitle}</title>
+                <link
+                    rel='stylesheet'
+                    href='https://unpkg.com/@highlightjs/cdn-assets@11.0.1/styles/default.min.css'></link>
             </Head>
             <Flex p={4} justify='center' align='center'>
                 <Spacer />

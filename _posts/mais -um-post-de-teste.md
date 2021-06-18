@@ -28,13 +28,6 @@ Após fazer isso, você irá se deparar com a seguinte tela:
 ![Tela do bot criado com sucesso](/v1611760566/compilado/screen07_c7c5h3.jpg)
 Essa tela é importante, pois é nela que você irá obter o Token do Bot, necessário para fazer a autenticação com o servidor do Discord. Clique em “Click to Reveal Token” para ver seu Token. Em Authorization Flow tem uma opção de “Public Bot”, ela vem marcada por padrão, se seu bot for um bot público em que você quer que qualquer pessoa adicione ele em seus servidores, pode deixar como está, mas se você não quer isso, eu aconselho desmarcar essa opção.
 
-```js
-const x = 4
-const y = 5
-
-console.log(x * y)
-```
-
 Após isso, vamos criar um novo servidor no Discord para poder testar o nosso Bot enquanto codificamos ele. Vou assumir que você já sabe como fazer isso, e pular essa parte.
 
 Agora que temos nosso servidor de teste, voltamos a página de desenvolvedor do Discord, e dessa vez vamos na página de “OAuth2” para gerar o link para convidar nosso Bot para o servidor com as devidas permissões.
@@ -52,11 +45,62 @@ Nosso bot será escrito em JavaScript e vamos rodar ele com Node.js, se você n�
 
 Primeiro vamos abrir nosso terminal de linha de comandos. Se você está usando Windows será CMD, Prompt de Comando ou PowerShell. Se você está usando Linux é Terminal. Após abrir seu terminal, execute o comando abaixo, para criar uma pasta onde vai ficar os arquivos do seu bot e criar nosso package.json para gerenciar as dependências do nosso projeto.
 
+```bash
+mkdir meubot && cd meubot
+npm init
+```
+
 Após executar esse comando, irá aparecer um terminar interativo para você fornecer algumas informações, o que tiver dentro de parênteses você pode apertar enter por que é o valor padrão, só escreva algo se quiser alterar, no final escreva “yes” para finalizar:
+
+```bash
+Use `npm install <pkg>` afterwards to install a package and
+save it as a dependency in the package.json file.
+Press ^C at any time to quit.
+package name: (meybot)
+version: (1.0.0)
+description: Bot de teste para meu tutorial
+entry point: (index.js)
+test command:
+git repository:
+keywords:
+author: William Spacefire
+license: (ISC)
+About to write to /home/williamspacefire/meybot/package.json:
+{
+  "name": "meybot",
+  "version": "1.0.0",
+  "description": "Bot de teste para meu tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "William Spacefire",
+  "license": "ISC"
+}
+Is this OK? (yes) yes
+```
 
 Feito isso, será criado um arquivo chamado package.json, ele serve para gerenciar as dependências do seu projeto. Se você olhar dentro do arquivo você verá algo semelhante a isso:
 
+```bash
+{
+  "name": "meybot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "William Spacefire",
+  "license": "ISC"
+}
+```
+
 Feito isso, vamos agora instalar o discord.js que é a única dependência que vamos usar, execute o comando abaixo.
+
+```bash
+npm install discord.js
+```
 
 Após instalar o discord.js podemos escrever nosso primeiro código.
 
@@ -64,7 +108,63 @@ Após instalar o discord.js podemos escrever nosso primeiro código.
 
 Agora que configuramos tudo, vamos criar um arquivo chamado index.js e por o nosso código nele. Copie e cole o código abaixo.
 
+```javascript
+//Primeiro vamos importar o discord.js ao nosso projeto
+
+const { Client } = require('discord.js')
+
+//Agora vamos criar um novo Client
+
+const client = new Client()
+
+//Aqui colocamos o Token do nosso bot
+
+const token = ''
+
+//Aqui colocamos o prefixo do nosso bot
+
+const prefix = '/'
+
+//Agora vamos criar um evento para quando uma mensagem for recebida o nosso bot ser notificado
+
+client.on('message', message => {
+    //Se o autor da mensagem for um bot, ignoramos
+
+    if (message.author.bot) return
+
+    //Se a mensagem não começar com o prefixo, paramos a execução do código
+
+    if (!message.content.startsWith(prefix)) return
+
+    //removemos o prefixo da mensagem
+
+    const messageBody = message.content.slice(prefix.length)
+
+    //Cria uma lista com os argumentos passados na mensagem
+
+    const args = messageBody.split(' ')
+
+    //Remove o comando da lista e retorna ele para a variável
+
+    const command = args.shift().toLowerCase()
+
+    //Se o comando da mensagem for /ping, respondemos com Pong
+
+    if (command == 'ping') {
+        message.reply('Pong')
+    }
+})
+
+//Fazemos login no Discord usando o token do nosso bot
+
+client.login(token)
+```
+
 depois vá até a constante “token” na **linha 8** e insira o token do seu bot, após fazer isso abra seu Terminal e execute o comando:
+
+```bash
+node index.js
+```
 
 Se você não ver nenhum erro no seu Terminal, vá até seu servidor no Discord, você deverá ver seu bot online na lista de membros, vá em algum canal de texto envie **/ping** e você deverá obter uma resposta do bot.
 

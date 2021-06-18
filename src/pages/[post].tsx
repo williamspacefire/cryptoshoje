@@ -10,7 +10,7 @@ import {
     UnorderedList,
     ListItem,
 } from '@chakra-ui/layout'
-import { Image } from '@chakra-ui/react'
+import { Code, Image } from '@chakra-ui/react'
 import ReactMarkdown from 'react-markdown'
 import { GetStaticProps } from 'next'
 import gfm from 'remark-gfm'
@@ -18,10 +18,13 @@ import { PostsMarkdownFileImpl } from '../adapters/posts'
 import { Post } from '../entities/post_type'
 import Footer from '../views/footer/footer'
 import { getDirectoryFiles, postsDirectory } from '../use_cases/file'
+const highlight = require('rehype-highlight')
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const postId = params?.post as string
-    const post = new PostsMarkdownFileImpl(postId).getPost()
+    const postsMarkdownFileImpl = new PostsMarkdownFileImpl()
+    postsMarkdownFileImpl.setPostId(postId)
+    const post = postsMarkdownFileImpl.getPost()
     return { props: { post } }
 }
 
@@ -49,7 +52,7 @@ const Posts = (props: { post: Post }) => {
                         <Box>
                             <ReactMarkdown
                                 remarkPlugins={[gfm]}
-                                //rehypePlugins={[highlight]}
+                                rehypePlugins={[highlight]}
                                 components={{
                                     h1: ({ node, children }) => (
                                         <>
@@ -89,6 +92,11 @@ const Posts = (props: { post: Post }) => {
                                                 {children}
                                             </ListItem>
                                         </>
+                                    ),
+                                    code: ({ node, children }) => (
+                                        <Code className='article-code'>
+                                            {children}
+                                        </Code>
                                     ),
                                 }}>
                                 {post?.content}
