@@ -37,11 +37,16 @@ export class PostsMarkdownFileImpl implements PostsModel {
 
         if (limit) this.limitDirectoryFiles(limit)
 
-        return this.directoryFiles.map(filename => {
-            const postsInstance = new PostsMarkdownFileImpl()
-            postsInstance.setPostId(this.getPostIdFromFileName(filename))
-            return postsInstance.getPost()
-        })
+        return this.directoryFiles.map(filename =>
+            this.directoryFilesMapCallback(filename)
+        )
+    }
+
+    protected directoryFilesMapCallback(filename: string): Post {
+        const postsInstance = new PostsMarkdownFileImpl()
+        postsInstance.setPostId(this.getPostIdFromFileName(filename))
+
+        return postsInstance.getPost()
     }
 
     private limitDirectoryFiles(limit: number): void {
