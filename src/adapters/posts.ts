@@ -8,12 +8,13 @@ import {
 
 export class PostsMarkdownFileImpl implements PostsModel {
     private postId?: string
+    private directoryFiles?: string[]
 
-    setPostId(postId: string): void {
+    public setPostId(postId: string): void {
         this.postId = postId
     }
 
-    getPost(): Post {
+    public getPost(): Post {
         if (!this.postId)
             throw new Error('You need to set postId to use this function')
 
@@ -31,19 +32,31 @@ export class PostsMarkdownFileImpl implements PostsModel {
         }
     }
 
-    getPosts(limit?: number): Post[] {
-        return getDirectoryFiles(postsDirectory).map(filename => {
+    public getPosts(limit?: number): Post[] {
+        this.directoryFiles = getDirectoryFiles(postsDirectory)
+
+        if (limit) this.limitDirectoryFiles(limit)
+
+        return this.directoryFiles.map(filename => {
             const postsInstance = new PostsMarkdownFileImpl()
             postsInstance.setPostId(this.getPostIdFromFileName(filename))
             return postsInstance.getPost()
         })
     }
 
-    getPostFileNameFromPostId(postId?: string): string {
+    private limitDirectoryFiles(limit: number): void {
+        if (!this.directoryFiles) throw new Error('directory files not set')
+
+        this.directoryFiles = this.directoryFiles.filter(
+            (_, index) => index < limit
+        )
+    }
+
+    private getPostFileNameFromPostId(postId?: string): string {
         return postId ? `${postId}.md` : `${this.postId}.md`
     }
 
-    getPostIdFromFileName(filename?: string): string {
+    private getPostIdFromFileName(filename?: string): string {
         if (filename) {
             return filename.replace('.md', '')
         } else if (this.postId) {
