@@ -1,6 +1,8 @@
 import { Post } from './post_type'
 
 export interface PostsModel {
-    getPost(postid: string): Post
+    getPost(): Post
     getPosts(limit?: number): Post[]
+    setPostId(postId: string): void
+    getPostId(): string
 }
