@@ -1,11 +1,12 @@
 import { PostsModel } from '../entities/posts_interface'
+import { PostMetadata } from '../entities/post_metadata'
 import { Post } from '../entities/post_type'
 import {
     getDirectoryFiles,
     getFileContent,
-    getFileStats,
     postsDirectory,
 } from '../use_cases/file'
+import matter from 'gray-matter'
 
 export class PostsMarkdownFileImpl implements PostsModel {
     private postId?: string
@@ -31,17 +32,18 @@ export class PostsMarkdownFileImpl implements PostsModel {
         const absoluteFilePath =
             postsDirectory + '/' + this.getPostFileNameFromPostId()
         const postFileContent = getFileContent(absoluteFilePath)
-        const postFileStats = getFileStats(absoluteFilePath)
-        const postDescription =
-            'Nessa série de posts vamos aprender a criar um bot para o Discord.'
+        const matter = this.getPostMetaData(postFileContent)
+        const content = matter.content
+        const metadata = matter.data as PostMetadata
 
         return {
-            content: postFileContent,
-            title: 'Criando um Bot para o Discord com Node.js – Parte 1 - Testando...',
+            content: content,
+            title: metadata.title,
             canonical: this.postId,
-            description: postDescription,
-            creation_time: postFileStats.ctimeMs,
-            modification_time: postFileStats.mtimeMs,
+            thumbnail: metadata.thumbnail,
+            description: metadata.description,
+            creation_time: metadata.creation_time,
+            modification_time: metadata.modification_time,
         }
     }
 
@@ -52,6 +54,7 @@ export class PostsMarkdownFileImpl implements PostsModel {
         const posts = this.directoryFiles.map(filename =>
             this.directoryFilesMapCallback(filename)
         )
+
         return this.sortPost(posts)
     }
 
@@ -84,5 +87,9 @@ export class PostsMarkdownFileImpl implements PostsModel {
 
     public sortPost(post: Post[]) {
         return post.sort((a, b) => b.creation_time - a.creation_time)
+    }
+
+    private getPostMetaData(postContent: string) {
+        return matter(postContent)
     }
 }

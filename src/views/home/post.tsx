@@ -24,7 +24,7 @@ export default function PostPage(props: { posts: Post[] }) {
                             src='/image/12.jpg'
                             width={600}
                             height={350}
-                            alt='Caroline Rommanel'
+                            alt={post.title}
                         />
 
                         <Box p='6'>
@@ -81,7 +81,7 @@ export default function PostPage(props: { posts: Post[] }) {
                                     ml='2'
                                     color='gray.600'
                                     fontSize='sm'>
-                                    7 Meses atrás
+                                    {new Date(post.creation_time).toISOString()}
                                 </Box>
                                 <Spacer />
                                 <Box>

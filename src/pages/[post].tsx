@@ -31,7 +31,7 @@ const Posts = (props: { post: Post }) => {
     const { post } = props
     return (
         <>
-            <Header title='Olá mundo' />
+            <Header title={post.title} />
             <Flex justify='center' align='center' p='10'>
                 <Box w='3xl'>
                     <VStack spacing='20px'>
@@ -44,7 +44,7 @@ const Posts = (props: { post: Post }) => {
                         </Heading>
                         <Image
                             borderRadius='xl'
-                            src='/image/12.jpg'
+                            src={post.thumbnail}
                             width='full'
                             maxH='405px'
                         />
