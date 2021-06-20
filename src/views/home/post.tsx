@@ -11,13 +11,14 @@ export default function PostPage(props: { posts: Post[] }) {
     const { posts } = props
 
     return (
-        <Flex justify='center' align='center' m={3}>
+        <Flex justify='center' align='center' m={3} direction='column'>
             {posts.map(post => {
                 return (
                     <Box
                         maxW='600px'
                         borderWidth='1px'
                         borderRadius='lg'
+                        marginBottom='8'
                         overflow='hidden'>
                         <Image
                             src='/image/12.jpg'
