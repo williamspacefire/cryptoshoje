@@ -3,24 +3,35 @@ import { Post } from '../entities/post_type'
 import {
     getDirectoryFiles,
     getFileContent,
+    getFileStats,
     postsDirectory,
 } from '../use_cases/file'
 
 export class PostsMarkdownFileImpl implements PostsModel {
     private postId?: string
-    private directoryFiles?: string[]
+    protected directoryFiles?: string[]
 
-    public setPostId(postId: string): void {
+    setPostId(postId: string): void {
         this.postId = postId
+    }
+
+    getPostId(): string {
+        if (!this.postId)
+            throw new Error(
+                'PostId not defined, please set postId before get it'
+            )
+
+        return this.postId
     }
 
     public getPost(): Post {
         if (!this.postId)
             throw new Error('You need to set postId to use this function')
 
-        const postFileContent = getFileContent(
-            `${postsDirectory}/${this.getPostFileNameFromPostId()}`
-        )
+        const absoluteFilePath =
+            postsDirectory + '/' + this.getPostFileNameFromPostId()
+        const postFileContent = getFileContent(absoluteFilePath)
+        const postFileStats = getFileStats(absoluteFilePath)
         const postDescription =
             'Nessa série de posts vamos aprender a criar um bot para o Discord.'
 
@@ -29,6 +40,8 @@ export class PostsMarkdownFileImpl implements PostsModel {
             title: 'Criando um Bot para o Discord com Node.js – Parte 1 - Testando...',
             canonical: this.postId,
             description: postDescription,
+            creation_time: postFileStats.ctimeMs,
+            modification_time: postFileStats.mtimeMs,
         }
     }
 
@@ -36,10 +49,10 @@ export class PostsMarkdownFileImpl implements PostsModel {
         this.directoryFiles = getDirectoryFiles(postsDirectory)
 
         if (limit) this.limitDirectoryFiles(limit)
-
-        return this.directoryFiles.map(filename =>
+        const posts = this.directoryFiles.map(filename =>
             this.directoryFilesMapCallback(filename)
         )
+        return this.sortPost(posts)
     }
 
     protected directoryFilesMapCallback(filename: string): Post {
@@ -67,5 +80,9 @@ export class PostsMarkdownFileImpl implements PostsModel {
         } else if (this.postId) {
             return this.postId.replace('.md', '')
         } else throw new Error('You need to pass filename or set the postId')
+    }
+
+    public sortPost(post: Post[]) {
+        return post.sort((a, b) => b.creation_time - a.creation_time)
     }
 }
