@@ -14,17 +14,16 @@ import { Code, Image } from '@chakra-ui/react'
 import ReactMarkdown from 'react-markdown'
 import { GetStaticProps } from 'next'
 import gfm from 'remark-gfm'
-import { PostsMarkdownFileImpl } from '../adapters/posts'
 import { Post } from '../entities/post_type'
 import Footer from '../views/footer/footer'
 import { getDirectoryFiles, postsDirectory } from '../use_cases/file'
+import postsDatabase from '../use_cases/posts_database'
 const highlight = require('rehype-highlight')
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const postId = params?.post as string
-    const postsMarkdownFileImpl = new PostsMarkdownFileImpl()
-    postsMarkdownFileImpl.setPostId(postId)
-    const post = postsMarkdownFileImpl.getPost()
+    postsDatabase.setPostId(postId)
+    const post = postsDatabase.getPost()
     return { props: { post } }
 }
 
@@ -112,7 +111,7 @@ const Posts = (props: { post: Post }) => {
 
 export async function getStaticPaths() {
     return {
-        fallback: true,
+        fallback: false,
         paths: getDirectoryFiles(postsDirectory).map(
             file => '/' + file.replace('.md', '')
         ),
