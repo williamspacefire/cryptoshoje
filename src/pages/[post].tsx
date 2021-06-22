@@ -19,6 +19,7 @@ import Footer from '../views/footer/footer'
 import { getDirectoryFiles, postsDirectory } from '../use_cases/file'
 import postsDatabase from '../use_cases/posts_database'
 const highlight = require('rehype-highlight')
+export const postsImageDirectory: string = "/image/posts/"
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const postId = params?.post as string
@@ -44,7 +45,7 @@ const Posts = (props: { post: Post }) => {
                         </Heading>
                         <Image
                             borderRadius='xl'
-                            src={post.thumbnail}
+                            src={postsImageDirectory+post.thumbnail}
                             width='full'
                             maxH='405px'
                         />

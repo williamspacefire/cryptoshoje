@@ -6,6 +6,7 @@ import { Box } from '@chakra-ui/layout'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Post } from '../../entities/post_type'
+import { postsImageDirectory } from '../../pages/[post]'
 
 export default function PostPage(props: { posts: Post[] }) {
     const { posts } = props
@@ -21,7 +22,7 @@ export default function PostPage(props: { posts: Post[] }) {
                         marginBottom='8'
                         overflow='hidden'>
                         <Image
-                            src='/image/12.jpg'
+                            src={postsImageDirectory+post.thumbnail}
                             width={600}
                             height={350}
                             alt={post.title}
