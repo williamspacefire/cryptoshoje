@@ -37,27 +37,17 @@ export default function PostPage(props: { posts: Post[] }) {
                                     fontSize='xs'
                                     textTransform='uppercase'
                                     ml='2'>
-                                    <Badge
+                                    {
+                                        post.tags.map(tag => {
+                                            return <Badge
                                         m={2}
                                         borderRadius='full'
                                         px='2'
                                         colorScheme='teal'>
-                                        Bot
+                                        {tag}
                                     </Badge>
-                                    <Badge
-                                        m={2}
-                                        borderRadius='full'
-                                        px='2'
-                                        colorScheme='teal'>
-                                        Discord
-                                    </Badge>
-                                    <Badge
-                                        m={2}
-                                        borderRadius='full'
-                                        px='2'
-                                        colorScheme='teal'>
-                                        NodeJS
-                                    </Badge>
+                                        })
+                                    }
                                 </Box>
                             </Box>
 

@@ -4,6 +4,7 @@ type Post = {
     canonical: string
     content: string
     thumbnail: string
+    tags: string[]
     creation_time: number
     modification_time: number
 }

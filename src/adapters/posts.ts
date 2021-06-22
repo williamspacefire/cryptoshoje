@@ -41,6 +41,7 @@ export class PostsMarkdownFileImpl implements PostsModel {
             title: metadata.title,
             canonical: this.postId,
             thumbnail: metadata.thumbnail,
+            tags: metadata.tags.split(","),
             description: metadata.description,
             creation_time: metadata.creation_time,
             modification_time: metadata.modification_time,
