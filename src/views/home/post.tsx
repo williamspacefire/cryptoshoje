@@ -22,7 +22,7 @@ export default function PostPage(props: { posts: Post[] }) {
                         marginBottom='8'
                         overflow='hidden'>
                         <Image
-                            src={postsImageDirectory+post.thumbnail}
+                            src={postsImageDirectory + post.thumbnail}
                             width={600}
                             height={350}
                             alt={post.title}
@@ -37,17 +37,17 @@ export default function PostPage(props: { posts: Post[] }) {
                                     fontSize='xs'
                                     textTransform='uppercase'
                                     ml='2'>
-                                    {
-                                        post.tags.map(tag => {
-                                            return <Badge
-                                        m={2}
-                                        borderRadius='full'
-                                        px='2'
-                                        colorScheme='teal'>
-                                        {tag}
-                                    </Badge>
-                                        })
-                                    }
+                                    {post.tags.map(tag => {
+                                        return (
+                                            <Badge
+                                                m={2}
+                                                borderRadius='full'
+                                                px='2'
+                                                colorScheme='teal'>
+                                                {tag}
+                                            </Badge>
+                                        )
+                                    })}
                                 </Box>
                             </Box>
 

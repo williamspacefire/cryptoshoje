@@ -1,5 +1,5 @@
 ---
-title: Post de teste para o Markdown
+title: Post de teste para o Markdown - testando para ver o tamanho
 description: Nessa série de posts vamos aprender a criar um bot para o Discord. Recentemente eu precisei de um Bot para um servidor do Discord que eu tenho, existem várias opções
 thumbnail: discord-bot.jpg
 tags: bot, discord, nodejs, javascript
