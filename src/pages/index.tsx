@@ -4,10 +4,10 @@ import PostPage from '../views/home/post'
 import Footer from '../views/footer/footer'
 import { GetStaticProps } from 'next'
 import { Post } from '../entities/post_type'
-import postsDatabase from '../use_cases/posts_database'
+import { postsImpl } from '../main/dependencies'
 
 export const getStaticProps: GetStaticProps = async context => {
-    return { props: { posts: postsDatabase.getPosts() } }
+    return { props: { posts: postsImpl.getPosts() } }
 }
 
 export default function Index(props: { posts: Post[] }) {

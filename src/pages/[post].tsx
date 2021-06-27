@@ -17,14 +17,14 @@ import gfm from 'remark-gfm'
 import { Post } from '../entities/post_type'
 import Footer from '../views/footer/footer'
 import { getDirectoryFiles, postsDirectory } from '../use_cases/file'
-import postsDatabase from '../use_cases/posts_database'
+import { postsImpl } from '../main/dependencies'
 const highlight = require('rehype-highlight')
-export const postsImageDirectory: string = "/image/posts/"
+export const postsImageDirectory: string = '/image/posts/'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const postId = params?.post as string
-    postsDatabase.setPostId(postId)
-    const post = postsDatabase.getPost()
+    postsImpl.setPostId(postId)
+    const post = postsImpl.getPost()
     return { props: { post } }
 }
 
@@ -45,7 +45,7 @@ const Posts = (props: { post: Post }) => {
                         </Heading>
                         <Image
                             borderRadius='xl'
-                            src={postsImageDirectory+post.thumbnail}
+                            src={postsImageDirectory + post.thumbnail}
                             width='full'
                             maxH='405px'
                         />
