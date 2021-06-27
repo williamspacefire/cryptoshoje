@@ -56,17 +56,59 @@ const Posts = (props: { post: Post }) => {
                                 components={{
                                     h1: ({ node, children }) => (
                                         <>
-                                            <Heading as='h1' margin='3'>
+                                            <Heading
+                                                fontSize='36px'
+                                                as='h1'
+                                                margin='3'>
                                                 {children}
                                             </Heading>
-                                            <Divider />
                                         </>
                                     ),
                                     h2: ({ node, children }) => (
                                         <>
                                             <Heading
-                                                variant='h2'
                                                 as='h2'
+                                                fontSize='30px'
+                                                margin='3'>
+                                                {children}
+                                            </Heading>
+                                        </>
+                                    ),
+                                    h3: ({ node, children }) => (
+                                        <>
+                                            <Heading
+                                                as='h3'
+                                                fontSize='24px'
+                                                margin='3'>
+                                                {children}
+                                            </Heading>
+                                        </>
+                                    ),
+                                    h4: ({ node, children }) => (
+                                        <>
+                                            <Heading
+                                                as='h3'
+                                                fontSize='18px'
+                                                margin='3'>
+                                                {children}
+                                            </Heading>
+                                        </>
+                                    ),
+                                    h5: ({ node, children }) => (
+                                        <>
+                                            <Heading
+                                                as='h3'
+                                                fontSize='14px'
+                                                margin='3'>
+                                                {children}
+                                            </Heading>
+                                        </>
+                                    ),
+                                    h6: ({ node, children }) => (
+                                        <>
+                                            <Heading
+                                                as='h3'
+                                                fontSize='12px'
                                                 margin='3'>
                                                 {children}
                                             </Heading>

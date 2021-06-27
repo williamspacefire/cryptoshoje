@@ -14,6 +14,7 @@ export default function PostPage(props: { posts: Post[] }) {
     return (
         <Flex justify='center' align='center' m={3} direction='column'>
             {posts.map(post => {
+                const publishedDate = new Date(post.creation_time)
                 return (
                     <Box
                         maxW='600px'
@@ -37,17 +38,19 @@ export default function PostPage(props: { posts: Post[] }) {
                                     fontSize='xs'
                                     textTransform='uppercase'
                                     ml='2'>
-                                    {post.tags.map(tag => {
-                                        return (
-                                            <Badge
-                                                m={2}
-                                                borderRadius='full'
-                                                px='2'
-                                                colorScheme='teal'>
-                                                {tag}
-                                            </Badge>
-                                        )
-                                    })}
+                                    {post.tags
+                                        .filter((tag, index) => index < 8)
+                                        .map(tag => {
+                                            return (
+                                                <Badge
+                                                    m={2}
+                                                    borderRadius='full'
+                                                    px='2'
+                                                    colorScheme='teal'>
+                                                    {tag}
+                                                </Badge>
+                                            )
+                                        })}
                                 </Box>
                             </Box>
 
@@ -72,7 +75,7 @@ export default function PostPage(props: { posts: Post[] }) {
                                     ml='2'
                                     color='gray.600'
                                     fontSize='sm'>
-                                    {new Date(post.creation_time).toISOString()}
+                                    {`${publishedDate.getDay()}/${publishedDate.getMonth()}/${publishedDate.getFullYear()}`}
                                 </Box>
                                 <Spacer />
                                 <Box>
