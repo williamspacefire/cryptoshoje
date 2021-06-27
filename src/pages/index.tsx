@@ -18,7 +18,7 @@ export default function Index(props: { posts: Post[] }) {
             <Header
                 title={
                     config.site.name +
-                    ' - Ensinando programação para todo o Brasil'
+                    ' - Um Compilado de conhecimentos em programação'
                 }
                 homePage={true}
             />
