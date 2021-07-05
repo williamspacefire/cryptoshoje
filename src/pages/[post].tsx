@@ -140,6 +140,9 @@ const Posts = (props: { post: Post }) => {
                                             {children}
                                         </Code>
                                     ),
+                                    hr: ({ node, children }) => (
+                                        <Divider m='4px' />
+                                    ),
                                 }}>
                                 {post?.content}
                             </ReactMarkdown>
