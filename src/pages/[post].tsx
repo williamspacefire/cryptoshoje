@@ -1,16 +1,7 @@
 import React from 'react'
 import Header from '../views/header/header'
-import {
-    Flex,
-    Heading,
-    VStack,
-    Box,
-    Text,
-    Divider,
-    UnorderedList,
-    ListItem,
-} from '@chakra-ui/layout'
-import { Code, Image } from '@chakra-ui/react'
+import { Flex, Heading, VStack, Box } from '@chakra-ui/layout'
+import { Image } from '@chakra-ui/react'
 import ReactMarkdown from 'react-markdown'
 import { GetStaticProps } from 'next'
 import gfm from 'remark-gfm'
@@ -18,6 +9,7 @@ import { Post } from '../entities/post_type'
 import Footer from '../views/footer/footer'
 import { getDirectoryFiles, postsDirectory } from '../use_cases/file'
 import { postsImpl } from '../main/dependencies'
+import { postsComponents } from '../use_cases/posts_components'
 const highlight = require('rehype-highlight')
 export const postsImageDirectory: string = '/image/posts/'
 
@@ -30,6 +22,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 const Posts = (props: { post: Post }) => {
     const { post } = props
+
     return (
         <>
             <Header title={post.title} />
@@ -53,97 +46,7 @@ const Posts = (props: { post: Post }) => {
                             <ReactMarkdown
                                 remarkPlugins={[gfm]}
                                 rehypePlugins={[highlight]}
-                                components={{
-                                    h1: ({ node, children }) => (
-                                        <>
-                                            <Heading
-                                                fontSize='36px'
-                                                as='h1'
-                                                margin='3'>
-                                                {children}
-                                            </Heading>
-                                        </>
-                                    ),
-                                    h2: ({ node, children }) => (
-                                        <>
-                                            <Heading
-                                                as='h2'
-                                                fontSize='30px'
-                                                margin='3'>
-                                                {children}
-                                            </Heading>
-                                        </>
-                                    ),
-                                    h3: ({ node, children }) => (
-                                        <>
-                                            <Heading
-                                                as='h3'
-                                                fontSize='24px'
-                                                margin='3'>
-                                                {children}
-                                            </Heading>
-                                        </>
-                                    ),
-                                    h4: ({ node, children }) => (
-                                        <>
-                                            <Heading
-                                                as='h3'
-                                                fontSize='18px'
-                                                margin='3'>
-                                                {children}
-                                            </Heading>
-                                        </>
-                                    ),
-                                    h5: ({ node, children }) => (
-                                        <>
-                                            <Heading
-                                                as='h3'
-                                                fontSize='14px'
-                                                margin='3'>
-                                                {children}
-                                            </Heading>
-                                        </>
-                                    ),
-                                    h6: ({ node, children }) => (
-                                        <>
-                                            <Heading
-                                                as='h3'
-                                                fontSize='12px'
-                                                margin='3'>
-                                                {children}
-                                            </Heading>
-                                        </>
-                                    ),
-                                    p: ({ node, children }) => (
-                                        <>
-                                            <Text as='p' margin='3'>
-                                                {children}
-                                            </Text>
-                                        </>
-                                    ),
-                                    ul: ({ node, children }) => (
-                                        <>
-                                            <UnorderedList as='ul' margin='3'>
-                                                {children}
-                                            </UnorderedList>
-                                        </>
-                                    ),
-                                    li: ({ node, children }) => (
-                                        <>
-                                            <ListItem as='li' margin='3'>
-                                                {children}
-                                            </ListItem>
-                                        </>
-                                    ),
-                                    code: ({ node, children }) => (
-                                        <Code className='article-code'>
-                                            {children}
-                                        </Code>
-                                    ),
-                                    hr: ({ node, children }) => (
-                                        <Divider m='4px' />
-                                    ),
-                                }}>
+                                components={postsComponents}>
                                 {post?.content}
                             </ReactMarkdown>
                         </Box>
