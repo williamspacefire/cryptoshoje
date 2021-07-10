@@ -10,8 +10,31 @@ import {
     NormalComponents,
     SpecialComponents,
 } from 'react-markdown/src/ast-to-react'
+import { Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react'
 
 export class PostsComponents {
+    static components(): Partial<NormalComponents & SpecialComponents> {
+        return {
+            h1: ({ children }) => PostsComponents.h1(children),
+            h2: ({ children }) => PostsComponents.h2(children),
+            h3: ({ children }) => PostsComponents.h3(children),
+            h4: ({ children }) => PostsComponents.h4(children),
+            h5: ({ children }) => PostsComponents.h5(children),
+            h6: ({ children }) => PostsComponents.h6(children),
+            p: ({ children }) => PostsComponents.p(children),
+            ul: ({ children }) => PostsComponents.ul(children),
+            li: ({ children }) => PostsComponents.li(children),
+            code: ({ children }) => PostsComponents.code(children),
+            table: ({ children }) => PostsComponents.table(children),
+            thead: ({ children }) => PostsComponents.thead(children),
+            tbody: ({ children }) => PostsComponents.tbody(children),
+            tr: ({ children }) => PostsComponents.tr(children),
+            th: ({ children }) => PostsComponents.th(children),
+            td: ({ children }) => PostsComponents.td(children),
+            hr: () => PostsComponents.hr(),
+        }
+    }
+
     static h1(children: React.ReactNode[]) {
         return (
             <Heading fontSize='36px' as='h1' margin='3'>
@@ -91,18 +114,28 @@ export class PostsComponents {
     static hr() {
         return <Divider m='4px' />
     }
-}
 
-export const postsComponents: Partial<NormalComponents & SpecialComponents> = {
-    h1: ({ children }) => PostsComponents.h1(children),
-    h2: ({ children }) => PostsComponents.h2(children),
-    h3: ({ children }) => PostsComponents.h3(children),
-    h4: ({ children }) => PostsComponents.h4(children),
-    h5: ({ children }) => PostsComponents.h5(children),
-    h6: ({ children }) => PostsComponents.h6(children),
-    p: ({ children }) => PostsComponents.p(children),
-    ul: ({ children }) => PostsComponents.ul(children),
-    li: ({ children }) => PostsComponents.li(children),
-    code: ({ children }) => PostsComponents.code(children),
-    hr: () => PostsComponents.hr(),
+    static table(children: React.ReactNode[]) {
+        return <Table>{children}</Table>
+    }
+
+    static thead(children: React.ReactNode[]) {
+        return <Thead>{children}</Thead>
+    }
+
+    static tbody(children: React.ReactNode[]) {
+        return <Tbody>{children}</Tbody>
+    }
+
+    static tr(children: React.ReactNode[]) {
+        return <Tr>{children}</Tr>
+    }
+
+    static th(children: React.ReactNode[]) {
+        return <Th>{children}</Th>
+    }
+
+    static td(children: React.ReactNode[]) {
+        return <Td>{children}</Td>
+    }
 }

@@ -9,7 +9,7 @@ import { Post } from '../entities/post_type'
 import Footer from '../views/footer/footer'
 import { getDirectoryFiles, postsDirectory } from '../use_cases/file'
 import { postsImpl } from '../main/dependencies'
-import { postsComponents } from '../use_cases/posts_components'
+import { PostsComponents } from '../use_cases/posts_components'
 const highlight = require('rehype-highlight')
 export const postsImageDirectory: string = '/image/posts/'
 
@@ -46,7 +46,7 @@ const Posts = (props: { post: Post }) => {
                             <ReactMarkdown
                                 remarkPlugins={[gfm]}
                                 rehypePlugins={[highlight]}
-                                components={postsComponents}>
+                                components={PostsComponents.components()}>
                                 {post?.content}
                             </ReactMarkdown>
                         </Box>
