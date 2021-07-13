@@ -17,7 +17,13 @@ export default function PostPage(props: { posts: Post[] }) {
                 const publishedDate = new Date(post.creation_time)
                 return (
                     <Box
-                        maxW='600px'
+                        maxW={{
+                            base: '100%',
+                            sm: 'sm',
+                            md: 'md',
+                            lg: 'lg',
+                            xl: 'xl',
+                        }}
                         borderWidth='1px'
                         borderRadius='lg'
                         marginBottom='8'
@@ -39,7 +45,7 @@ export default function PostPage(props: { posts: Post[] }) {
                                     textTransform='uppercase'
                                     ml='2'>
                                     {post.tags
-                                        .filter((tag, index) => index < 8)
+                                        .filter((_, index) => index < 8)
                                         .map(tag => {
                                             return (
                                                 <Badge
@@ -63,10 +69,13 @@ export default function PostPage(props: { posts: Post[] }) {
                                 {post.title}
                             </Box>
 
-                            <Box>
-                                <Box as='span' color='gray.600' fontSize='sm'>
-                                    {post.description}
-                                </Box>
+                            <Box
+                                mt='1'
+                                color='gray.600'
+                                fontSize='sm'
+                                lineHeight='tight'
+                                isTruncated>
+                                {post.description}
                             </Box>
 
                             <Box d='flex' mt='2' alignItems='center'>
