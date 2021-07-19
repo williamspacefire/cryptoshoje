@@ -1,19 +1,22 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { AppProps } from 'next/dist/next-server/lib/router/router'
+import React from 'react'
 import '../../public/css/app.css'
 
 const themeConfig = {
-    initialColorMode: 'dark',
     useSystemColorMode: true,
 }
+
 const theme = extendTheme({ themeConfig })
 
-function MyApp({ Component, pageProps }: AppProps) {
-    return (
-        <ChakraProvider theme={theme}>
-            <Component {...pageProps} />
-        </ChakraProvider>
-    )
+class Blog extends React.Component<AppProps> {
+    render() {
+        return (
+            <ChakraProvider theme={theme}>
+                <this.props.Component {...this.props.pageProps} />
+            </ChakraProvider>
+        ) 
+    }
 }
 
-export default MyApp
+export default Blog
