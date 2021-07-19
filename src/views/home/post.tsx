@@ -5,7 +5,7 @@ import { Flex } from '@chakra-ui/layout'
 import { Box } from '@chakra-ui/layout'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Post } from '../../entities/post_type'
+import { Post } from '../../entities/Post'
 import { postsImageDirectory } from '../../pages/[post]'
 
 export default function PostPage(props: { posts: Post[] }) {

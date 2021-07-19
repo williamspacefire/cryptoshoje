@@ -1,3 +1,3 @@
-import { PostsMarkdownFileImpl } from '../adapters/posts'
+import { PostsMarkdownFileImpl } from '../adapters/PostsMarkdownFileImpl'
 
 export const postsImpl = new PostsMarkdownFileImpl()

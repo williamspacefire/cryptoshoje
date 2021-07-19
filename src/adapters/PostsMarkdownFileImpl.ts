@@ -1,6 +1,6 @@
-import { PostsModel } from '../entities/posts_interface'
-import { PostMetadata } from '../entities/post_metadata'
-import { Post } from '../entities/post_type'
+import { IPosts } from '../entities/IPosts'
+import { PostMetadata } from '../entities/PostMetadata'
+import { Post } from '../entities/Post'
 import {
     getDirectoryFiles,
     getFileContent,
@@ -8,7 +8,7 @@ import {
 } from '../use_cases/file'
 import matter from 'gray-matter'
 
-export class PostsMarkdownFileImpl implements PostsModel {
+export class PostsMarkdownFileImpl implements IPosts {
     private postId?: string
     protected directoryFiles?: string[]
 

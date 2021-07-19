@@ -1,6 +1,6 @@
-import { PostsMarkdownFileImpl } from '../adapters/posts'
-import { PostsModel } from '../entities/posts_interface'
+import { PostsMarkdownFileImpl } from '../adapters/PostsMarkdownFileImpl'
+import { IPosts } from '../entities/IPosts'
 
-const postsDatabase: PostsModel = new PostsMarkdownFileImpl()
+const postsDatabase: IPosts = new PostsMarkdownFileImpl()
 
 export default postsDatabase

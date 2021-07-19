@@ -3,7 +3,7 @@ import config from '../../config'
 import PostPage from '../views/home/post'
 import Footer from '../views/footer/footer'
 import { GetStaticProps } from 'next'
-import { Post } from '../entities/post_type'
+import { Post } from '../entities/Post'
 import { postsImpl } from '../main/dependencies'
 
 export const getStaticProps: GetStaticProps = async context => {
