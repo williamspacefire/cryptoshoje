@@ -14,10 +14,15 @@ const highlight = require('rehype-highlight')
 export const postsImageDirectory: string = '/image/posts/'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const postId = params?.post as string
-    postsImpl.setPostId(postId)
-    const post = postsImpl.getPost()
-    return { props: { post } }
+    const postId = params?.post
+    
+    if (typeof postId === "string") {
+        postsImpl.setPostId(postId)
+        const post = postsImpl.getPost()
+        return { props: { post } }
+    } else {
+        return { notFound: true}
+    }
 }
 
 const Posts = (props: { post: Post }) => {
