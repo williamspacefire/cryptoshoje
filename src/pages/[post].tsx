@@ -67,7 +67,7 @@ const Posts = (props: { post: Post }) => {
 
 export async function getStaticPaths() {
     return {
-        fallback: true,
+        fallback: false,
         paths: postsImpl.getHomePagePaths(),
     }
 }
