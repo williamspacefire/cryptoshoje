@@ -1,24 +1,20 @@
 import React from 'react'
-import Header from '../views/header/header'
+import Header from '../views/header'
 import { Flex, Heading, VStack, Box } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
 import ReactMarkdown from 'react-markdown'
 import { GetStaticProps } from 'next'
 import gfm from 'remark-gfm'
 import { Post } from '../entities/Post'
-import Footer from '../views/footer/footer'
+import Footer from '../views/footer'
 import { postsImageDirectory, postsImpl } from '../main/dependencies'
 import { PostsComponents } from '../use_cases/posts_components'
 const highlight = require('rehype-highlight')
 
-function getPost(): Post {
-    return postsImpl.getPost()
-}
-
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const postId = params?.post as string
     postsImpl.setPostId(postId)
-    const post = getPost()
+    const post = postsImpl.getPost()
 
     if (post.title) {
         return { props: { post } }
