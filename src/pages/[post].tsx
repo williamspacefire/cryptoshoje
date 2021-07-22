@@ -31,7 +31,7 @@ const Posts = (props: { post: Post }) => {
             <Flex justify='center' align='center' p='10'>
                 <Box w='3xl'>
                     <VStack spacing='20px'>
-                        <PostTitle title={post.title}/>
+                        <PostTitle title={post.title} />
                         <Image
                             borderRadius='xl'
                             src={postsImageDirectory + post.thumbnail}

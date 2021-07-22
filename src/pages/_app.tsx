@@ -15,7 +15,7 @@ class Blog extends React.Component<AppProps> {
             <ChakraProvider theme={theme}>
                 <this.props.Component {...this.props.pageProps} />
             </ChakraProvider>
-        ) 
+        )
     }
 }
 
