@@ -9,6 +9,7 @@ import { Post } from '../entities/Post'
 import Footer from '../views/footer'
 import { postsImageDirectory, postsImpl } from '../main/dependencies'
 import { PostsComponents } from '../use_cases/posts_components'
+import PostTitle from '../views/post/PostTitle'
 const highlight = require('rehype-highlight')
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -30,13 +31,7 @@ const Posts = (props: { post: Post }) => {
             <Flex justify='center' align='center' p='10'>
                 <Box w='3xl'>
                     <VStack spacing='20px'>
-                        <Heading
-                            as='h1'
-                            margin='3'
-                            fontSize='1.875rem'
-                            fontWeight='extrabold'>
-                            {post?.title}
-                        </Heading>
+                        <PostTitle title={post.title}/>
                         <Image
                             borderRadius='xl'
                             src={postsImageDirectory + post.thumbnail}
