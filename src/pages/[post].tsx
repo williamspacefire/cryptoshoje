@@ -16,11 +16,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     postsImpl.setPostId(postId)
     const post = postsImpl.getPost()
 
-    if (post.title) {
-        return { props: { post } }
-    } else {
-        return { notFound: true }
-    }
+    if (post) return { props: { post } }
+
+    return { notFound: true }
 }
 
 const Posts = (props: { post: Post }) => {
