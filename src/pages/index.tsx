@@ -32,4 +32,3 @@ export default class IndexPage extends React.Component<IndexProps> {
         )
     }
 }
-

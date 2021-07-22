@@ -1,16 +1,18 @@
 import { IPosts } from '../entities/IPosts'
 import { PostMetadata } from '../entities/PostMetadata'
 import { Post } from '../entities/Post'
-import {
-    getDirectoryFiles,
-    getFileContent,
-    postsDirectory,
-} from '../use_cases/file'
+import File from '../use_cases/file'
 import matter from 'gray-matter'
 
 export class PostsMarkdownFileImpl implements IPosts {
     private postId?: string
     protected directoryFiles?: string[]
+
+    getHomePagePaths(): string[] {
+        return File.getDirectoryFiles(File.getPostsDirectory()).map(
+            file => '/' + file.replace('.md', '')
+        )
+    }
 
     setPostId(postId: string): void {
         this.postId = postId
@@ -30,8 +32,8 @@ export class PostsMarkdownFileImpl implements IPosts {
             throw new Error('You need to set postId to use this function')
 
         const absoluteFilePath =
-            postsDirectory + '/' + this.getPostFileNameFromPostId()
-        const postFileContent = getFileContent(absoluteFilePath)
+            File.getPostsDirectory() + '/' + this.getPostFileNameFromPostId()
+        const postFileContent = File.getFileContent(absoluteFilePath)
         const matter = this.getPostMetaData(postFileContent)
         const content = matter.content
         const metadata = matter.data as PostMetadata
@@ -41,7 +43,7 @@ export class PostsMarkdownFileImpl implements IPosts {
             title: metadata.title,
             canonical: this.postId,
             thumbnail: metadata.thumbnail,
-            tags: metadata.tags.split(","),
+            tags: metadata.tags.split(','),
             description: metadata.description,
             creation_time: metadata.creation_time,
             modification_time: metadata.modification_time,
@@ -49,7 +51,7 @@ export class PostsMarkdownFileImpl implements IPosts {
     }
 
     public getPosts(limit?: number): Post[] {
-        this.directoryFiles = getDirectoryFiles(postsDirectory)
+        this.directoryFiles = File.getDirectoryFiles(File.getPostsDirectory())
 
         if (limit) this.limitDirectoryFiles(limit)
         const posts = this.directoryFiles.map(filename =>

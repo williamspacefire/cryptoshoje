@@ -5,4 +5,5 @@ export interface IPosts {
     getPosts(limit?: number): Post[]
     setPostId(postId: string): void
     getPostId(): string
+    getHomePagePaths(): string[]
 }

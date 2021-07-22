@@ -7,21 +7,23 @@ import { GetStaticProps } from 'next'
 import gfm from 'remark-gfm'
 import { Post } from '../entities/Post'
 import Footer from '../views/footer/footer'
-import { getDirectoryFiles, postsDirectory } from '../use_cases/file'
-import { postsImpl } from '../main/dependencies'
+import { postsImageDirectory, postsImpl } from '../main/dependencies'
 import { PostsComponents } from '../use_cases/posts_components'
 const highlight = require('rehype-highlight')
-export const postsImageDirectory: string = '/image/posts/'
+
+function getPost(): Post {
+    return postsImpl.getPost()
+}
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const postId = params?.post
-    
-    if (typeof postId === "string") {
-        postsImpl.setPostId(postId)
-        const post = postsImpl.getPost()
+    const postId = params?.post as string
+    postsImpl.setPostId(postId)
+    const post = getPost()
+
+    if (post.title) {
         return { props: { post } }
     } else {
-        return { notFound: true}
+        return { notFound: true }
     }
 }
 
@@ -65,10 +67,8 @@ const Posts = (props: { post: Post }) => {
 
 export async function getStaticPaths() {
     return {
-        fallback: false,
-        paths: getDirectoryFiles(postsDirectory).map(
-            file => '/' + file.replace('.md', '')
-        ),
+        fallback: true,
+        paths: postsImpl.getHomePagePaths(),
     }
 }
 

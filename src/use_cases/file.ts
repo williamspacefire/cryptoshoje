@@ -1,14 +1,22 @@
 import { join } from 'path'
 import fs from 'fs'
 
-export const postsDirectory: string = join(process.cwd(), 'posts')
-const encoding = 'utf8'
+export default class File {
+    static readonly encoding = 'utf8'
 
-export const getFileContent = (absoluteFilePath: string): string =>
-    fs.readFileSync(absoluteFilePath, encoding)
+    static getPostsDirectory(): string {
+        return join(process.cwd(), 'posts')
+    }
 
-export const getDirectoryFiles = (directoryPath: string): string[] =>
-    fs.readdirSync(directoryPath)
+    static getFileContent(absoluteFilePath: string): string {
+        return fs.readFileSync(absoluteFilePath, File.encoding)
+    }
 
-export const getFileStats = (absoluteFilePath: string): fs.Stats =>
-    fs.statSync(absoluteFilePath)
+    static getDirectoryFiles(directoryPath: string): string[] {
+        return fs.readdirSync(directoryPath)
+    }
+
+    static getFileStats(absoluteFilePath: string): fs.Stats {
+        return fs.statSync(absoluteFilePath)
+    }
+}
