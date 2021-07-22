@@ -13,10 +13,11 @@ export default function PostPage(props: { posts: Post[] }) {
 
     return (
         <Flex justify='center' align='center' m={3} direction='column'>
-            {posts.map(post => {
+            {posts.map((post, index) => {
                 const publishedDate = new Date(post.creation_time)
                 return (
                     <Box
+                        key={index}
                         maxW={{
                             base: '100%',
                             sm: 'sm',
@@ -46,9 +47,10 @@ export default function PostPage(props: { posts: Post[] }) {
                                     ml='2'>
                                     {post.tags
                                         .filter((_, index) => index < 8)
-                                        .map(tag => {
+                                        .map((tag, index) => {
                                             return (
                                                 <Badge
+                                                    key={index}
                                                     m={2}
                                                     borderRadius='full'
                                                     px='2'
