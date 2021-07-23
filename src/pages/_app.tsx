@@ -11,9 +11,11 @@ const theme = extendTheme({ themeConfig })
 
 class Blog extends React.Component<AppProps> {
     render() {
+        const Component = this.props.Component
+
         return (
             <ChakraProvider theme={theme}>
-                <this.props.Component {...this.props.pageProps} />
+                <Component {...this.props.pageProps} />
             </ChakraProvider>
         )
     }
