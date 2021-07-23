@@ -1,6 +1,5 @@
 import React from 'react'
 import { Image } from '@chakra-ui/react'
-import { postsImageDirectory } from '../../main/dependencies'
 
 type PostThumbnailProps = { thumbnail: string }
 
