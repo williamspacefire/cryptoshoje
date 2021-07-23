@@ -10,6 +10,7 @@ import Footer from '../views/footer'
 import { postsImageDirectory, postsImpl } from '../main/dependencies'
 import { PostsComponents } from '../use_cases/posts_components'
 import PostTitle from '../views/post/PostTitle'
+import { PostThumbnail } from '../views/post/PostThumbnail'
 const highlight = require('rehype-highlight')
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -32,12 +33,7 @@ const Posts = (props: { post: Post }) => {
                 <Box w='3xl'>
                     <VStack spacing='20px'>
                         <PostTitle title={post.title} />
-                        <Image
-                            borderRadius='xl'
-                            src={postsImageDirectory + post.thumbnail}
-                            width='full'
-                            maxH='405px'
-                        />
+                        <PostThumbnail thumbnail={post.thumbnail} />
                         <Box>
                             <ReactMarkdown
                                 remarkPlugins={[gfm]}
