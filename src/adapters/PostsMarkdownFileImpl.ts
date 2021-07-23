@@ -8,6 +8,7 @@ import { postsImageDirectory } from '../main/dependencies'
 export class PostsMarkdownFileImpl implements IPosts {
     private postId?: string
     protected directoryFiles?: string[]
+    private post?: Post
 
     getHomePagePaths(): string[] {
         return File.getDirectoryFiles(File.getPostsDirectory()).map(
@@ -32,23 +33,39 @@ export class PostsMarkdownFileImpl implements IPosts {
         if (!this.postId)
             throw new Error('You need to set postId to use this function')
 
-        const absoluteFilePath =
-            File.getPostsDirectory() + '/' + this.getPostFileNameFromPostId()
+        this.setPostFromFile()
+
+        return this.post!
+    }
+
+    private setPostFromFile() {
+        if (!this.postId)
+            throw new Error('You need to set postId to use this function')
+
+        const absoluteFilePath = this.getFilePostFileAbsolutePath()
         const postFileContent = File.getFileContent(absoluteFilePath)
         const matter = this.getPostMetaData(postFileContent)
-        const content = matter.content
         const metadata = matter.data as PostMetadata
 
-        return {
-            content: content,
-            title: metadata.title,
+        this.post = {
+            ...metadata,
+            content: matter.content,
             canonical: this.postId,
-            thumbnail: postsImageDirectory + metadata.thumbnail,
-            tags: metadata.tags.split(','),
-            description: metadata.description,
-            creation_time: metadata.creation_time,
-            modification_time: metadata.modification_time,
+            tags: this.getTagsFromString(metadata.tags),
+            thumbnail: this.getThumbnailPath(metadata.thumbnail),
         }
+    }
+
+    private getThumbnailPath(thumbnail: string): string {
+        return postsImageDirectory + thumbnail
+    }
+
+    private getFilePostFileAbsolutePath(): string {
+        return File.getPostsDirectory() + '/' + this.getPostFileNameFromPostId()
+    }
+
+    private getTagsFromString(tagsString: string): string[] {
+        return tagsString.split(',')
     }
 
     public getPosts(limit?: number): Post[] {
