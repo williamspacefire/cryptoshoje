@@ -3,6 +3,7 @@ import { PostMetadata } from '../entities/PostMetadata'
 import { Post } from '../entities/Post'
 import File from '../use_cases/file'
 import matter from 'gray-matter'
+import { postsImageDirectory } from '../main/dependencies'
 
 export class PostsMarkdownFileImpl implements IPosts {
     private postId?: string
@@ -42,7 +43,7 @@ export class PostsMarkdownFileImpl implements IPosts {
             content: content,
             title: metadata.title,
             canonical: this.postId,
-            thumbnail: metadata.thumbnail,
+            thumbnail: postsImageDirectory + metadata.thumbnail,
             tags: metadata.tags.split(','),
             description: metadata.description,
             creation_time: metadata.creation_time,
