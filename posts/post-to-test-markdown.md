@@ -1,6 +1,6 @@
 ---
 title: Post to test markdown better
-description: Let´s see if everything is working fine
+description: Let´s see if everything is working fine, just putting more text here to fit the content right in the home page
 thumbnail: discord-bot.jpg
 tags: markdown, post, test
 creation_time: 1624834312440

@@ -26,7 +26,7 @@ export default class IndexPage extends React.Component<IndexProps> {
                     }
                     homePage={true}
                 />
-                <HomePageContent {...this.props.posts} />
+                <HomePageContent posts={this.props.posts} />
                 <Footer />
             </>
         )

@@ -1,93 +1,83 @@
 import React from 'react'
 import { Post } from '../../entities/Post'
-import Image from 'next/image'
-import { Badge, Box, Spacer } from '@chakra-ui/layout'
 import Link from 'next/link'
-import { Button } from '@chakra-ui/button'
+import Image from 'next/image'
+import {
+    Box,
+    Center,
+    Heading,
+    Text,
+    Stack,
+    Avatar,
+    useColorModeValue,
+    HStack,
+} from '@chakra-ui/react'
 
-export default class PostCard extends React.Component<Post> {
-    render() {
-        const publishedDate = new Date(this.props.creation_time)
+export default function PostCard(props: Post) {
+    const date = new Date(props.creation_time)
 
-        return (
+    return (
+        <Center py={6}>
             <Box
-                key={this.props.creation_time}
-                maxW={{
-                    base: '100%',
-                    sm: 'sm',
-                    md: 'md',
-                    lg: 'lg',
-                    xl: 'xl',
-                }}
-                borderWidth='1px'
-                borderRadius='lg'
-                marginBottom='8'
-                overflow='hidden'>
-                <Image
-                    src={this.props.thumbnail}
-                    width={600}
-                    height={350}
-                    alt={this.props.title}
-                />
-                <Box p='6'>
-                    <Box d='flex' alignItems='baseline'>
-                        <Box
-                            color='gray.500'
-                            fontWeight='semibold'
-                            letterSpacing='wide'
-                            fontSize='xs'
-                            textTransform='uppercase'
-                            ml='2'>
-                            {this.props.tags
-                                .filter((_, index) => index < 8)
-                                .map((tag, index) => {
-                                    return (
-                                        <Badge
-                                            key={index}
-                                            m={2}
-                                            borderRadius='full'
-                                            px='2'
-                                            colorScheme='teal'>
-                                            {tag}
-                                        </Badge>
-                                    )
-                                })}
-                        </Box>
-                    </Box>
-
-                    <Box
-                        mt='1'
-                        fontWeight='semibold'
-                        as='h4'
-                        lineHeight='tight'
-                        isTruncated>
-                        {this.props.title}
-                    </Box>
-
-                    <Box
-                        mt='1'
-                        color='gray.600'
-                        fontSize='sm'
-                        lineHeight='tight'
-                        isTruncated>
-                        {this.props.description}
-                    </Box>
-
-                    <Box d='flex' mt='2' alignItems='center'>
-                        <Box as='span' ml='2' color='gray.600' fontSize='sm'>
-                            {`${publishedDate.getDay()}/${publishedDate.getMonth()}/${publishedDate.getFullYear()}`}
-                        </Box>
-                        <Spacer />
-                        <Box>
-                            <Link href={`/${this.props.canonical}`} passHref>
-                                <Button colorScheme='teal' size='sm' as='a'>
-                                    Continuar lendo...
-                                </Button>
-                            </Link>
-                        </Box>
-                    </Box>
+                maxW={'445px'}
+                w={'full'}
+                bg={useColorModeValue('white', 'gray.900')}
+                boxShadow={'2xl'}
+                rounded={'md'}
+                p={6}
+                overflow={'hidden'}>
+                <Box
+                    h={'210px'}
+                    bg={'gray.100'}
+                    mt={-6}
+                    mx={-6}
+                    mb={6}
+                    pos={'relative'}>
+                    <Image src={props.thumbnail} layout={'fill'} />
                 </Box>
+                <Stack>
+                    <HStack>
+                        {props.tags.map((tag, index) => {
+                            if (index > 2) return
+                            return (
+                                <Text
+                                    key={index}
+                                    color={'green.500'}
+                                    textTransform={'uppercase'}
+                                    fontWeight={800}
+                                    fontSize={'sm'}
+                                    letterSpacing={1.1}>
+                                    {tag}
+                                </Text>
+                            )
+                        })}
+                    </HStack>
+                    <Heading
+                        color={useColorModeValue('gray.700', 'white')}
+                        fontSize={'2xl'}
+                        fontFamily={'body'}>
+                        <Link href={`/${props.canonical}`} passHref>
+                            <a>{props.title}</a>
+                        </Link>
+                    </Heading>
+                    <Text color={'gray.500'}>{props.description}</Text>
+                </Stack>
+                <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
+                    <Avatar
+                        src={
+                            'https://avatars.githubusercontent.com/u/4999076?v=4'
+                        }
+                        alt={'Author'}
+                    />
+                    <Stack direction={'column'} spacing={0} fontSize={'sm'}>
+                        <Text fontWeight={600}>William Spacefire</Text>
+                        <Text color={'gray.500'}>
+                            {date.getDay()}/{date.getMonth()}/
+                            {date.getFullYear()}
+                        </Text>
+                    </Stack>
+                </Stack>
             </Box>
-        )
-    }
+        </Center>
+    )
 }
