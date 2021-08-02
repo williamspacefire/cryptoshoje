@@ -1,6 +1,6 @@
 import Header from '../views/header'
 import config from '../../config'
-import PostPage from '../views/home'
+import HomePageContent from '../views/home'
 import Footer from '../views/footer'
 import { GetStaticProps } from 'next'
 import { Post } from '../entities/Post'
@@ -26,7 +26,7 @@ export default class IndexPage extends React.Component<IndexProps> {
                     }
                     homePage={true}
                 />
-                <PostPage posts={this.props.posts} />
+                <HomePageContent {...this.props.posts} />
                 <Footer />
             </>
         )
