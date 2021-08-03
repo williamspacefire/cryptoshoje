@@ -1,7 +1,6 @@
 import React from 'react'
-import { Post } from '../../entities/Post'
+import { Post } from '../../../entities/Post'
 import Link from 'next/link'
-import Image from 'next/image'
 import {
     Box,
     Center,
@@ -12,6 +11,7 @@ import {
     useColorModeValue,
     HStack,
 } from '@chakra-ui/react'
+import HomePostThumbnail from './HomePostThumbnail'
 
 export default function PostCard(props: Post) {
     const date = new Date(props.creation_time)
@@ -26,15 +26,7 @@ export default function PostCard(props: Post) {
                 rounded={'md'}
                 p={6}
                 overflow={'hidden'}>
-                <Box
-                    h={'210px'}
-                    bg={'gray.100'}
-                    mt={-6}
-                    mx={-6}
-                    mb={6}
-                    pos={'relative'}>
-                    <Image src={props.thumbnail} layout={'fill'} />
-                </Box>
+                <HomePostThumbnail thumbnailUrl={props.thumbnail} />
                 <Stack>
                     <HStack>
                         {props.tags.map((tag, index) => {
