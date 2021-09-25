@@ -9,19 +9,27 @@ export const getStaticProps: GetStaticProps = async context => {
     )
     const cryptoJson = await cryptoData.json()
     console.log(JSON.stringify(cryptoJson))
-    return { props: { cryptos: JSON.stringify(cryptoJson) } }
+    return { props: { cryptos: JSON.stringify(cryptoJson) }, revalidate: 1 }
 }
 
 export default function IndexPage(props: { cryptos: string }) {
     const data = JSON.parse(props.cryptos)
     const btc = data[0]
+    var price_date: string = 'Loading date...'
+    var price_time: string = 'Loading time...'
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     })
 
+    if (process.browser) {
+        price_date = new Date(btc.price_timestamp).toLocaleDateString()
+        price_time = new Date(btc.price_timestamp).toLocaleTimeString()
+    }
+
     return (
         <Flex p={50} w='full' alignItems='center' justifyContent='center'>
+            <title>Cryptos Hoje - Seu site de cryptomoedas</title>
             <Flex
                 w='xl'
                 mx='auto'
@@ -29,12 +37,9 @@ export default function IndexPage(props: { cryptos: string }) {
                 shadow='lg'
                 rounded='lg'
                 overflow='hidden'>
-                <Box
-                    w={1 / 3}
-                    bgSize='cover'
-                    style={{
-                        backgroundImage: `url('${btc.logo_url}')`,
-                    }}></Box>
+                <Box w={1 / 3} p={4}>
+                    <img src={btc.logo_url} width='200px' />
+                </Box>
 
                 <Box w={2 / 3} p={{ base: 4, md: 4 }}>
                     <chakra.h1
@@ -48,34 +53,21 @@ export default function IndexPage(props: { cryptos: string }) {
                         mt={2}
                         fontSize='sm'
                         color={useColorModeValue('gray.600', 'gray.400')}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit
-                        In odit
+                        MARKET CAP: {formatter.format(btc.market_cap)}
+                        <br />
+                        MAX SUPPLY: {btc.max_supply}
+                        <br />
+                        CIRCULATING SUPPLY: {btc.circulating_supply}
+                        <br />
+                        PRICE DATE: {price_date + ' ' + price_time}
                     </chakra.p>
-
-                    <HStack
-                        spacing={1}
-                        display='flex'
-                        alignItems='center'
-                        mt={2}>
-                        <StarIcon
-                            color={useColorModeValue('gray.700', 'gray.300')}
-                        />
-                        <StarIcon
-                            color={useColorModeValue('gray.700', 'gray.300')}
-                        />
-                        <StarIcon
-                            color={useColorModeValue('gray.700', 'gray.300')}
-                        />
-                        <StarIcon color='gray.500' />
-                        <StarIcon color='gray.500' />
-                    </HStack>
 
                     <Flex
                         mt={3}
                         alignItems='center'
                         justifyContent='space-between'>
                         <chakra.h1
-                            color='white'
+                            //color='white'
                             fontWeight='bold'
                             fontSize='lg'>
                             {formatter.format(btc.price)}
