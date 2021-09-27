@@ -1,20 +1,16 @@
-import { CheckIcon, PhoneIcon } from '@chakra-ui/icons'
 import {
-    HStack,
     Image,
     Input,
     InputGroup,
     InputLeftElement,
-    InputRightElement,
     Stack,
     Text,
     VStack,
 } from '@chakra-ui/react'
 import { useEffect } from 'react'
-import { ChangeEvent, ChangeEventHandler, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { CryptoInformation } from '../../entities/cryptointerface'
 import { formatter } from '../../use_cases/currency'
-import CryptoBox from './CryptoBox'
 
 export default function HomePage(props: { cryptosData: CryptoInformation[] }) {
     const defaultCrypto = props.cryptosData[0]

@@ -1,13 +1,5 @@
 import { GetStaticProps } from 'next'
 import React from 'react'
-import {
-    chakra,
-    Box,
-    Flex,
-    useColorModeValue,
-    HStack,
-    Image,
-} from '@chakra-ui/react'
 import Header from '../views/header'
 import { CryptoInformation } from '../entities/cryptointerface'
 import HomePage from '../views/home'
