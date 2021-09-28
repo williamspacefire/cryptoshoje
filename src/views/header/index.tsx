@@ -22,6 +22,7 @@ import {
     ChevronRightIcon,
 } from '@chakra-ui/icons'
 import Head from 'next/head'
+import NextLink from 'next/link'
 
 export default function WithSubnavigation() {
     const { isOpen, onToggle } = useDisclosure()
@@ -62,15 +63,18 @@ export default function WithSubnavigation() {
                     <Flex
                         flex={{ base: 1 }}
                         justify={{ base: 'center', md: 'start' }}>
-                        <Text
-                            textAlign={useBreakpointValue({
-                                base: 'center',
-                                md: 'left',
-                            })}
-                            fontFamily={'heading'}
-                            color={useColorModeValue('gray.800', 'white')}>
-                            Cryptos Hoje
-                        </Text>
+                        <NextLink href='/' passHref>
+                            <Text
+                                as='a'
+                                textAlign={useBreakpointValue({
+                                    base: 'center',
+                                    md: 'left',
+                                })}
+                                fontFamily={'heading'}
+                                color={useColorModeValue('gray.800', 'white')}>
+                                Cryptos Hoje
+                            </Text>
+                        </NextLink>
 
                         <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
                             <DesktopNav />
