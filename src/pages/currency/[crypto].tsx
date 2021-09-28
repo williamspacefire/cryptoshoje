@@ -42,12 +42,7 @@ export default function IndexPage(props: { cryptos: string }) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
-        paths: [
-            '/currency/btc',
-            '/currency/eth',
-            '/currency/ada',
-            '/currency/sol',
-        ],
+        paths: [],
         fallback: true,
     }
 }
