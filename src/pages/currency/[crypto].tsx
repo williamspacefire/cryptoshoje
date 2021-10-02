@@ -13,6 +13,7 @@ export const getStaticProps: GetStaticProps = async context => {
     const cryptoName = context!.params!.crypto as string
     console.log('CryptoName: ' + cryptoName)
     const cryptoResponse = await api.getSingleCrypto(cryptoName.toUpperCase())
+    console.log(cryptoResponse)
     return { props: { cryptos: JSON.stringify(cryptoResponse) }, revalidate: 1 }
 }
 
