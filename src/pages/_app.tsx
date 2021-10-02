@@ -1,5 +1,5 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
-import { AppProps } from 'next/dist/next-server/lib/router/router'
+import { AppProps } from 'next/dist/shared/lib/router/router'
 import React from 'react'
 import '../../public/css/app.css'
 
