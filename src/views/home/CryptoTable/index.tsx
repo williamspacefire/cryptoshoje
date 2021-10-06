@@ -42,7 +42,7 @@ export default function CryptoTable(props: { data: CryptoInformation[] }) {
                                     </Td>
                                     <Td>
                                         <Link
-                                            href={`/currency/${crypto.id}`}
+                                            href={`/currency/${crypto.id.toLocaleLowerCase()}`}
                                             passHref>
                                             <a>{crypto.name}</a>
                                         </Link>
