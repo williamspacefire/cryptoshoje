@@ -14,7 +14,7 @@ export default class NomicsApiImpl implements ICryptoApi {
         const params = this.getUrlParams({
             key: nomics_api,
             'per-page': 100,
-            convert: 'BRL',
+            convert: currency,
             ids: ids,
             interval: ['1d', '7d', '30d'],
             page: 1,
@@ -45,7 +45,7 @@ export default class NomicsApiImpl implements ICryptoApi {
     }
 
     async getSingleCrypto(crypto: string): Promise<CryptoInformation> {
-        const id = [crypto]
+        const id = [crypto.toUpperCase()]
         const response = await this.callNomicsApi(id)
         return response[0]
     }
