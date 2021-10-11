@@ -3,18 +3,18 @@ import Header from '../../views/header'
 import { CryptoInformation } from '../../entities/cryptointerface'
 import HomePage from '../../views/home'
 import NomicsApiImpl from '../../adapters/NomicsApi'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticPaths } from 'next'
 import ConvertComponent from '../../views/crypto/ConvertComponent'
 import Head from 'next/head'
 import { formatter } from '../../use_cases/currency'
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getServerSideProps: GetServerSideProps = async context => {
     const api = new NomicsApiImpl()
     const cryptoName = context!.params!.crypto as string
     console.log('CryptoName: ' + cryptoName)
     const cryptoResponse = await api.getSingleCrypto(cryptoName.toUpperCase())
     console.log(cryptoResponse)
-    return { props: { cryptos: JSON.stringify(cryptoResponse) }, revalidate: 1 }
+    return { props: { cryptos: JSON.stringify(cryptoResponse) } }
 }
 
 export default function IndexPage(props: { cryptos: string }) {
@@ -41,9 +41,9 @@ export default function IndexPage(props: { cryptos: string }) {
     )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    return {
-        paths: [],
-        fallback: true,
-    }
-}
+//export const getStaticPaths: GetStaticPaths = async () => {
+//    return {
+//        paths: [],
+//        fallback: true,
+//    }
+//}
