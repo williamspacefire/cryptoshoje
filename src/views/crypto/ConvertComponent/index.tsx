@@ -5,7 +5,6 @@ import {
     InputLeftElement,
     Skeleton,
     SkeletonCircle,
-    SkeletonText,
     Stack,
     Text,
     VStack,

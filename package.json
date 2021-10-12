@@ -36,6 +36,7 @@
         "react-markdown": "^6.0.2",
         "rehype-highlight": "^4.1.0",
         "remark-gfm": "^1.0.0",
+        "swr": "^1.0.1",
         "typescript": "^4.3.2"
     },
     "browser": {
