@@ -16,6 +16,7 @@ export const getStaticProps: GetStaticProps = async _ => {
                 '/api/top100': cryptoResponse,
             },
         },
+        revalidate: 1000,
     }
 }
 
