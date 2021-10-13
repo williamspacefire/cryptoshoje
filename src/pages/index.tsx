@@ -1,23 +1,29 @@
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import React from 'react'
 import Header from '../views/header'
 import { CryptoInformation } from '../entities/cryptointerface'
 import HomePage from '../views/home'
 import NomicsApiImpl from '../adapters/NomicsApi'
+import { SWRConfig } from 'swr'
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getStaticProps: GetStaticProps = async _ => {
     const api = new NomicsApiImpl()
     const cryptoResponse = await api.getAll()
-    return { props: { cryptos: JSON.stringify(cryptoResponse) } }
+
+    return {
+        props: {
+            fallback: {
+                '/api/top100': cryptoResponse,
+            },
+        },
+    }
 }
 
-export default function IndexPage(props: { cryptos: string }) {
-    const data: CryptoInformation[] = JSON.parse(props.cryptos)
-
+export default function IndexPage(props: { fallback: CryptoInformation[] }) {
     return (
-        <>
+        <SWRConfig value={{ fallback: props.fallback }}>
             <Header />
-            <HomePage cryptosData={data} />
-        </>
+            <HomePage />
+        </SWRConfig>
     )
 }
