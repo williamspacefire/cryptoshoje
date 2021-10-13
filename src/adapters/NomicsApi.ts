@@ -8,16 +8,18 @@ import queryString from 'query-string'
 export default class NomicsApiImpl implements ICryptoApi {
     private async callNomicsApi(
         ids: string[] = [],
-        currency: string = 'BRL'
+        currency: string = 'BRL',
+        coinsPerPage: number = 100,
+        sort: string = 'rank'
     ): Promise<CryptoInformation[]> {
         const params = this.getUrlParams({
             key: nomics_api,
-            'per-page': 100,
+            'per-page': coinsPerPage,
             convert: currency,
             ids: ids,
             interval: ['1d', '7d', '30d'],
             page: 1,
-            sort: 'rank',
+            sort: sort,
         })
         const cryptoData = await fetch(endpoint + params)
         const cryptoJson: CryptoInformation[] = await cryptoData.json()
