@@ -38,7 +38,7 @@ export default function ConvertComponent(props: { crypto: CryptoInformation }) {
         const timeOut = setTimeout(() => {
             if (defaultCrypto != undefined) {
                 setCotation(Number(defaultCrypto.price))
-                setValue(Number(defaultCrypto.price))
+                setValue(Number(defaultCrypto.price) * quantity)
                 setQuantity(quantity)
             }
         }, 1)
