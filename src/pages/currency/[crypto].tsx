@@ -37,9 +37,18 @@ function CryptoComponent(props: {
     }
     const fetcher = (args: RequestInfo) =>
         fetch(args, fetcherOptions).then(res => res.json())
-    const { data, error } = useSWR('/api/currency/', fetcher, {
+    let { data, error } = useSWR('/api/currency/', fetcher, {
         refreshInterval: 3000,
     })
+
+    if (process.browser) {
+        const pathSplitBySlash = window.location.pathname.split('/')
+        const pathSplitBySlashSize = pathSplitBySlash.length
+        const coinUpperCase =
+            pathSplitBySlash[pathSplitBySlashSize - 1].toUpperCase()
+
+        if ((data as CryptoInformation).id != coinUpperCase) data = undefined
+    }
 
     return (
         <>
