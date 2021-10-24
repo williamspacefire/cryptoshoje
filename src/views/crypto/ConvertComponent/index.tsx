@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { CryptoInformation } from '../../../entities/cryptointerface'
-import { formatter } from '../../../use_cases/currency'
+import { defaultCurrency, formatter } from '../../../use_cases/currency'
 
 export default function ConvertComponent(props: { crypto: CryptoInformation }) {
     const defaultCrypto = props.crypto
@@ -67,13 +67,13 @@ export default function ConvertComponent(props: { crypto: CryptoInformation }) {
                                 pointerEvents='none'
                                 color='gray.300'
                                 fontSize='1em'
-                                children='R$'
+                                children={defaultCurrency}
                             />
                             <Input
                                 disabled={true}
                                 value={formatter
                                     .format(cotation)
-                                    .replace('R$', '')}
+                                    .replace(defaultCurrency, '')}
                                 variant='filled'
                                 placeholder='Cotação'
                             />
@@ -109,12 +109,12 @@ export default function ConvertComponent(props: { crypto: CryptoInformation }) {
                                 pointerEvents='none'
                                 color='gray.300'
                                 fontSize='1em'
-                                children='R$'
+                                children={defaultCurrency}
                             />
                             <Input
                                 value={formatter
                                     .format(value)
-                                    .replace('R$', '')}
+                                    .replace(defaultCurrency, '')}
                                 variant='filled'
                                 disabled={true}
                             />

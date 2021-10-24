@@ -4,11 +4,12 @@ import ICryptoApi from '../entities/ICryptoApi'
 export const nomics_api = '14b4e61072b7f29158a3c747e27d5df1c0a2cf77'
 const endpoint = 'https://api.nomics.com/v1/currencies/ticker?'
 import queryString from 'query-string'
+import { defaultCurrency } from '../use_cases/currency'
 
 export default class NomicsApiImpl implements ICryptoApi {
     private async callNomicsApi(
         ids: string[] = [],
-        currency: string = 'BRL',
+        currency: string = defaultCurrency,
         coinsPerPage: number = 100,
         sort: string = 'rank'
     ): Promise<CryptoInformation[]> {
