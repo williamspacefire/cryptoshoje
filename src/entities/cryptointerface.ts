@@ -38,8 +38,8 @@ export interface CryptoInformation {
     price: bigint
     price_date: Date
     price_timestamp: Date
-    circulating_supply: string
-    max_supply: string
+    circulating_supply: number
+    max_supply: number
     market_cap: bigint
     market_cap_dominance: string
     num_exchanges: string
